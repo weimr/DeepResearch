@@ -53,6 +53,7 @@ async def generate_plan(state: OverallState, config: RunnableConfig) -> dict:
     emit_token = config.get("configurable", {}).get("_emit_token")
     if emit_token:
 
+        # 定义 token 回调函数
         async def on_token(text: str) -> None:
             await emit_token(text, "generate_plan")
 
@@ -74,6 +75,7 @@ async def generate_plan(state: OverallState, config: RunnableConfig) -> dict:
             ),
             research_proposal=state.get("plan", ""),
         )
+    # 提取计划内容（LLM回答的内容去掉Markdown格式）
     response = Post.extract_pattern(response, pattern="markdown")
     logger.info(f"[MainGraph] 生成的计划 ({len(response)} 字)")
 

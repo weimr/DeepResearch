@@ -11,10 +11,19 @@ import operator
 
 
 class OverallState(TypedDict):
+    # 对话主线
+    # 主对话历史，按id去重追加
     messages: Annotated[list, add_messages]
+    # 当前版需求澄清单/研究计划的正文
+    # generate_plan 写入，confirm_plan、_generate_queries、_critique、_outline、_draft、_critic_review
     plan: str
+    # HITL 状态旗子
+    # unconfirmed-计划待用户确认，主图会停在 awaiting_plan_confirmation；confirmed-用户提交确认，图继续往研究阶段跑
     plan_status: str
+    # Plan 澄清环节的独立子历史
     plan_messages: Annotated[list, add_messages]
+
+    # 研究阶段的中间产物
     search_query: Annotated[list, operator.add]
     web_search_result: Annotated[list, operator.add]
     sources_gathered: Annotated[list, operator.add]
