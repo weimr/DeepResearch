@@ -110,7 +110,7 @@ async def evaluate_plan(state: OverallState, config: RunnableConfig) -> str:
     return "confirm_plan"
 
 
-async def confirm_plan(state: OverallState, config: RunnableConfig) -> dict:
+async def confirm_plan(state: io, config: RunnableConfig) -> dict:
     """评估计划确认并设置新鲜度等级。
 
     仅当 plan_status 为 "confirmed"（用户已提交确认）时进入此节点。
